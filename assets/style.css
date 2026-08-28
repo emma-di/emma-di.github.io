@@ -373,36 +373,6 @@ li {
   background: var(--mint);
 }
 
-/* ---------- stat strip ---------- */
-.stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border: 2px solid var(--ink);
-  background: var(--paper);
-  box-shadow: var(--shadow);
-}
-.stat {
-  padding: 22px 20px;
-  border-right: 2px solid var(--ink);
-}
-.stat:last-child {
-  border-right: 0;
-}
-.stat__n {
-  font-family: var(--display);
-  font-size: clamp(26px, 3.6vw, 38px);
-  font-weight: 700;
-  line-height: 1;
-  color: var(--lilac-deep);
-}
-.stat__l {
-  font-family: var(--body);
-  font-size: 13px;
-  color: var(--ink-2);
-  margin-top: 8px;
-  line-height: 1.4;
-}
-
 /* ---------- work cards ---------- */
 .work-grid {
   display: grid;
@@ -869,15 +839,6 @@ li {
   }
   .portrait {
     justify-self: start;
-  }
-  .stats {
-    grid-template-columns: 1fr 1fr;
-  }
-  .stat:nth-child(2) {
-    border-right: 0;
-  }
-  .stat:nth-child(-n + 2) {
-    border-bottom: 2px solid var(--ink);
   }
   .about,
   .contact {
