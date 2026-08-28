@@ -451,6 +451,7 @@
 
           <a
             class="mini reveal"
+            id="apple"
             href="https://github.com/emma-di"
             target="_blank"
             rel="noopener"
@@ -500,7 +501,7 @@
         <p class="eyebrow reveal">Experience</p>
         <h2 class="section-title reveal">Where I've been</h2>
         <p class="section-lede reveal">
-          Product, engineering, research, and teaching. Mostly at the same time.
+          The chronology. Where something already has a full write-up above, I've linked to it rather than repeating the bullets.
         </p>
 
         <ul class="tl">
@@ -516,36 +517,18 @@
               automated matching
             </div>
             <div class="tl__body">
-              <ul>
-                <li>
-                  Owned the Pause Revamp as engineering DRI and acting PM. Wrote
-                  the project's first measurement plan, then shipped the pause
-                  flow, timed auto-resume, and account-settings exit hub to ~18K
-                  users in one week.
-                </li>
-                <li>
-                  Cut deactivations 19% across matched 11-day periods and took
-                  timed pauses from 0% to 18% of all pauses. Became the
-                  product's largest single system sweep and retention channel.
-                </li>
-                <li>
-                  Built an exit-reason survey routing users to targeted
-                  alternatives. About 22% of routed users abandoned
-                  deactivation.
-                </li>
-                <li>
-                  Designed and shipped the production sentiment-flagging system
-                  now scoring the full active user base, using a per-surface
-                  architecture (chatbot vs. matching) rather than one blended
-                  score.
-                </li>
-                <li>
-                  Shipped a three-tier match-priority system for the weighted
-                  Gale–Shapley / Edmonds' Blossom matcher. Guaranteed-user
-                  coverage went 37% → 87% in production, total matches down
-                  2.5%.
-                </li>
-              </ul>
+              <p style="margin-bottom:10px">
+                Product engineer on a campus matching product. I own retention, match
+                prioritization, and the sentiment system, from the PRD and measurement
+                plan through to the production code and whatever the number does after.
+              </p>
+              <p class="tl__links" style="margin:0">
+                Written up above:
+                <a href="work/pause-revamp.html">The Pause Revamp</a> ·
+                <a href="work/match-priority.html">Three-Tier Match Priority</a> ·
+                <a href="work/sentiment-loop.html">The Sentiment Loop</a> ·
+                <a href="work/yearbook.html">The Yearbook</a>
+              </p>
             </div>
           </li>
 
@@ -600,10 +583,9 @@
             </div>
             <div class="tl__when">Jun 2022 – Nov 2023</div>
             <div class="tl__body">
-              Trained a YOLOv8 (PyTorch) perception model to localize apples for
-              real-time robotic harvesting. 100% accuracy unoccluded, 86% under
-              occlusion in field tests. Presented first-author findings at ICRA
-              '23.
+              Perception and control for an autonomous apple harvester, tested in the
+              field. Written up above in
+              <a href="#apple">Robotic Apple Harvesting</a>.
             </div>
           </li>
 

@@ -972,3 +972,7 @@ li {
 
 /* case-study hero shares the reading column with the body below it */
 .cs-hero .wrap { max-width: 760px; }
+
+.tl__links { font-size: 14.5px; color: var(--ink-3); }
+.tl__links a { color: var(--lilac-deep); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+.tl__links a:hover { color: var(--ink); }
