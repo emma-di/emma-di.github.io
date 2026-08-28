@@ -57,7 +57,7 @@ def dither(src, dst, width, crop=None, spread=46, contrast=1.06, brightness=1.13
 
 # (source in raw/, output in assets/img/, pixel width, crop box)
 JOBS = [
-    ("emma.jpg",           "emma.png",           260, None),
+    ("emma.jpg",           "emma.png",           260, (0.114, 0.0, 0.886, 1.0)),
     ("life-symphony.jpg",       "life-symphony.png",  300, None),
     ("life-robotics.jpg",       "life-robotics.png",  300, (0.0, 0.10, 1.0, 0.80)),
     ("life-orchestra.jpg",       "life-orchestra.png", 300, None),
