@@ -116,15 +116,15 @@
 </p>
 
 <div class="pull">
-  <div class="pull__label">Why this is not a ranking problem</div>
+  <div class="pull__label">Why this isn't a ranking problem</div>
   <p style="margin:0">
-    Matching is zero-sum in a way ranking is not. Every person you match is a person somebody else cannot
+    Matching is zero-sum in a way ranking isn't. Every person you match is a person somebody else can't
     have. "Prioritize these users" always costs something, so the only real question is how much, and
     whether that price is worth paying.
   </p>
 </div>
 
-<h2>Why the obvious fix does not work</h2>
+<h2>Why the obvious fix doesn't work</h2>
 <p>
   The first thing anyone suggests is to sort guaranteed users to the front and match them greedily. That
   fails right away. Greedy assignment on a matching problem causes exactly the failure mode matching
@@ -133,7 +133,7 @@
 </p>
 <p>
   Blossom is also not a sort you can attach a rule to. It computes a maximum-weight matching over the entire
-  graph at once, augmenting along alternating paths and contracting odd cycles. There is no parameter for
+  graph at once, augmenting along alternating paths and contracting odd cycles. There's no parameter for
   "and definitely include this person." Any priority has to be expressed in the only thing the algorithm
   reads, which is edge weights.
 </p>

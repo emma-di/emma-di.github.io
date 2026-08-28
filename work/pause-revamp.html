@@ -72,7 +72,7 @@
           </div>
         </div>
         <h1>The Pause Revamp</h1>
-        <p class="lede">Deactivating was the only way to step back from Ditto, so people used it for things that were not permanent. I built the in-between state. Deactivations dropped 19%.</p>
+        <p class="lede">Deactivating was the only way to step back from Ditto, so people used it for things that weren't permanent. I built the in-between state. Deactivations dropped 19%.</p>
         <dl class="cs-meta">
           <div>
             <dt>Role</dt>
@@ -107,18 +107,18 @@
 <h2>The problem</h2>
 <p>
   Ditto matches people on campus, which means it asks for a real commitment every week. A lot of users hit
-  a week where they cannot show up. Midterms, a trip home, a bad date, a breakup. The product gave them one
+  a week where they can't show up. Midterms, a trip home, a bad date, a breakup. The product gave them one
   option for saying so, and it was to deactivate their account.
 </p>
 <p>
   That made every temporary problem look like a permanent one. In the data, someone taking two weeks off
   looked identical to someone who was finished, and getting back in took a deliberate decision they had to
-  remember to make. We were losing people who had not actually decided to leave.
+  remember to make. We were losing people who hadn't actually decided to leave.
 </p>
 
 <h2>Writing the measurement plan first</h2>
 <p>
-  I came in as engineering DRI and ended up acting as PM as well, so the first thing I wrote was not code.
+  I came in as engineering DRI and ended up acting as PM as well, so the first thing I wrote wasn't code.
   It was the project's first measurement plan, because nobody had defined what a successful pause was
   supposed to look like.
 </p>
@@ -126,7 +126,7 @@
   Two things came out of that. First, we agreed the goal was fewer permanent exits rather than fewer exit
   attempts. Those sound like the same target, but the cheapest way to reduce deactivations is to bury the
   button, and that wins the metric while making the product worse. Second, we fixed the comparison before
-  launch: matched 11-day periods, before and after. Deciding that up front meant the result could not get
+  launch: matched 11-day periods, before and after. Deciding that up front meant the result couldn't get
   quietly reframed later into something more flattering.
 </p>
 
@@ -143,13 +143,13 @@
 <h3>A real paused state</h3>
 <p>
   Paused is now its own state, separate from active and from deactivated. Your profile, history, and place
-  in the system all survive the break, so stepping away does not cost you anything.
+  in the system all survive the break, so stepping away doesn't cost you anything.
 </p>
 
 <h3>Timed auto-resume</h3>
 <p>
   This is the piece I like most. You set an end date when you pause, and the product brings you back on its
-  own. You do not have to remember. It turns a decision made on a bad night into something that expires by
+  own. You don't have to remember. It turns a decision made on a bad night into something that expires by
   itself. Timed pauses went from not existing to <b>18% of all pauses</b>.
 </p>
 
@@ -165,7 +165,7 @@
   Most exit surveys just collect data on the way out. This one branches. What you pick determines which
   alternative you see next, because "too many notifications" and "I met someone" are different problems and
   should not get the same screen. About <b>22% of routed users abandoned deactivation</b>. Not because we
-  argued with them, but because the thing they wanted already existed and they had not found it.
+  argued with them, but because the thing they wanted already existed and they hadn't found it.
 </p>
 
 <h2>Results</h2>
@@ -180,19 +180,19 @@
   is a lot more useful than watching someone go quiet and guessing.
 </p>
 
-<h2>What I would do differently</h2>
+<h2>What I'd do differently</h2>
 <ul>
   <li>
-    I would have shipped the exit survey first and the pause flow second. The survey is what told us which
+    I'd have shipped the exit survey first and the pause flow second. The survey is what told us which
     alternatives people wanted, and I built most of them before I had that data.
   </li>
   <li>
-    The 11-day comparison window was chosen for practical reasons and it is short. I would want a longer
+    The 11-day comparison window was chosen for practical reasons and it is short. I'd want a longer
     read before claiming the effect holds.
   </li>
   <li>
-    Owning the metric changed how I built. Knowing I would be the one presenting the numbers made me
-    instrument things I would otherwise have deferred, and I should just do that by default.
+    Owning the metric changed how I built. Knowing I'd be the one presenting the numbers made me
+    instrument things I'd otherwise have deferred, and I should just do that by default.
   </li>
 </ul>
 

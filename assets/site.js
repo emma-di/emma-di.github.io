@@ -268,6 +268,43 @@ document.addEventListener("DOMContentLoaded", () => {
   initDither();
   initReveal();
   initNav();
+  initPageTransitions();
   const y = document.querySelector("[data-year]");
   if (y) y.textContent = new Date().getFullYear();
 });
+
+/* ---------------- cross-document page transitions ---------------- */
+
+/* Names have to be unique per document, so only the card being navigated
+   to or from ever carries one. */
+function clearMorphNames() {
+  document.querySelectorAll('.card__icon, .card h3').forEach((el) => {
+    el.style.viewTransitionName = '';
+  });
+}
+
+function markMorphTarget(card) {
+  clearMorphNames();
+  if (!card) return;
+  const icon = card.querySelector('.card__icon');
+  const title = card.querySelector('h3');
+  if (icon) icon.style.viewTransitionName = 'cs-icon';
+  if (title) title.style.viewTransitionName = 'cs-title';
+}
+
+function initPageTransitions() {
+  document.querySelectorAll('.card[href]').forEach((card) => {
+    card.addEventListener('click', () => markMorphTarget(card));
+  });
+
+  // Coming back from a case study, morph into the card it came from.
+  addEventListener('pagereveal', (e) => {
+    if (!e.viewTransition) return;
+    const from = self.navigation?.activation?.from?.url;
+    if (!from) return;
+    const slug = from.split('/').pop();
+    if (!slug || !slug.endsWith('.html')) return;
+    markMorphTarget(document.querySelector(`.card[href$="${slug}"]`));
+    e.viewTransition.finished.finally(clearMorphNames);
+  });
+}

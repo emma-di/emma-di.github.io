@@ -109,7 +109,7 @@
 </p>
 <p>
   Ditto had that gap. Stated preferences went stale almost immediately, and the strongest signal available,
-  which is how the date actually went, was not being collected at all.
+  which is how the date actually went, wasn't being collected at all.
 </p>
 
 <h2>Part one: a chatbot that asks well</h2>
@@ -117,7 +117,7 @@
   I designed and shipped the post-date feedback system as a chatbot skill. Conversation was the right
   surface for a specific reason. A star rating gives you a number with nothing attached to it, but a short
   exchange tells you which part of the date the number is about, and gives people room to bring up things
-  you did not know to ask.
+  you didn't know to ask.
 </p>
 
 <h3>A 24-hour response window</h3>
@@ -129,8 +129,8 @@
 
 <h3>Safety escalation, built first</h3>
 <p>
-  If you invite people to describe how a date went, some of what you get back is not preference data. That
-  path cannot be a classification bucket that gets aggregated with everything else. It has to leave the
+  If you invite people to describe how a date went, some of what you get back isn't preference data. That
+  path can't be a classification bucket that gets aggregated with everything else. It has to leave the
   automated loop immediately and reach a person. I built the escalation route before the normal path, and I
   would do it in that order again.
 </p>
@@ -157,7 +157,7 @@
 <p>
   One number would have been simpler and misleading. The two surfaces are watching different things.
   Chatbot sentiment is what a user says directly, knowing they are being asked. Matching sentiment is
-  inferred from behavior, when they are not. Average those together and you get a number that does not
+  inferred from behavior, when they aren't. Average those together and you get a number that doesn't
   describe anything real. Someone can be enthusiastic in conversation and completely disengaged in the
   product, and that mismatch is the most useful thing you could know about them. A blended score deletes it.
 </p>
@@ -176,7 +176,7 @@
 <h2>What I took from it</h2>
 <ul>
   <li>
-    How you collect the data is part of the model design. The 24-hour window is not a UX detail, it is what
+    How you collect the data is part of the model design. The 24-hour window isn't a UX detail, it is what
     makes each response attributable to one event.
   </li>
   <li>
