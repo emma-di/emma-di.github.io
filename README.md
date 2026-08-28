@@ -23,6 +23,53 @@ python3 -m http.server 4321
 
 Then open <http://localhost:4321>. There is nothing to compile.
 
+## Updating your resume
+
+Nothing on this site is generated from the PDF. The PDF is a copy, and the page
+content is hand-written HTML. Updating one does not update the other.
+
+### The download button
+
+Overwrite `assets/EmmaDi-Resume.pdf`, keeping that exact filename. Six pages link
+to it, so a renamed file silently breaks all six.
+
+```bash
+cp ~/Downloads/<new-resume>.pdf assets/EmmaDi-Resume.pdf
+```
+
+### The page content
+
+If the resume changes in substance — new role, new metric, new project — edit the
+HTML too. Every fact lives in at most two places by design: a headline on the home
+page and the detail in its case study.
+
+| What changed | Files to edit |
+| --- | --- |
+| Ditto role, dates, or scope | `index.html` (hero, About, Experience) |
+| A Pause Revamp number | `index.html` card chip, `work/pause-revamp.html` |
+| A match-priority number | `index.html` card chip, `work/match-priority.html` |
+| A Yearbook number | `index.html` card chip, `work/yearbook.html` |
+| Sentiment system | `index.html` card, `work/sentiment-loop.html` |
+| Apple harvesting / ICRA | `index.html` mini card only |
+| dawaShare, Avicii | `index.html` mini cards only |
+| SMG, Causality Lab, CS106 | `index.html` Experience only |
+| GPA, coursework, activities | `index.html` Receipts panel |
+| Skills | `index.html` Toolkit panel |
+| Email or social links | all six pages (each footer) plus the Contact list |
+
+A new job or project means a new `work/*.html` page and a new `.card` in the work
+section of `index.html`. Copy an existing case study; they all share the same
+structure.
+
+### After editing
+
+```bash
+python3 -m http.server 4321
+```
+
+Click through every work card and every footer link. The only things that break
+quietly are a renamed PDF and a mistyped `work/` path.
+
 ## Adding or changing a photo
 
 Photos are Bayer-dithered down to a fixed six-colour pastel palette so
