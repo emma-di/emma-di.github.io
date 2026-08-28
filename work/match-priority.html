@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Three-Tier Match Priority — Emma Di</title>
+    <meta
+      name="description"
+      content="Adding priority tiers to a weighted Gale–Shapley / Edmonds' Blossom matcher at Ditto: guaranteed-user coverage 37% → 87% for a 2.5% cost in total matches."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 8' shape-rendering='crispEdges'%3E%3Cpath fill='%23E894BE' d='M1 1h2v1H1zM6 1h2v1H6zM1 2h7v2H1zM2 4h5v1H2zM3 5h3v1H3zM4 6h1v1H4z'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Silkscreen:wght@400;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/style.css" />
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="wrap nav__in">
+        <a class="nav__mark" href="../index.html">
+          <span data-sprite="heart" data-unit="3" data-accent="#E894BE"></span>
+          EMMA<span>DI</span>
+        </a>
+        <button
+          class="nav__toggle"
+          aria-expanded="false"
+          aria-controls="navlinks"
+        >
+          MENU
+        </button>
+        <div class="nav__links" id="navlinks">
+          <a href="../index.html#work">Work</a>
+          <a href="../index.html#experience">Experience</a>
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#contact">Contact</a>
+          <a href="../assets/EmmaDi-Resume.pdf">Résumé ↓</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="cs-hero">
+      <canvas
+        class="hero__bg px"
+        data-dither="band"
+        aria-hidden="true"
+      ></canvas>
+      <div class="wrap" style="position: relative; z-index: 1">
+        <a class="cs-back" href="../index.html#work">← All work</a>
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 14px;
+          "
+        >
+          <span
+            class="card__icon"
+            data-sprite="graph"
+            data-unit="6"
+            data-accent="#B9A8DE"
+          ></span>
+          <div class="card__kicker" style="margin: 0">
+            Ditto · Matching algorithms
+          </div>
+        </div>
+        <h1>Three-Tier Match Priority</h1>
+        <p class="lede">Ditto guarantees some users a match. The matcher was keeping that promise 37% of the time. I got it to 87% for a 2.5% cost in total matches.</p>
+        <dl class="cs-meta">
+          <div>
+            <dt>Role</dt>
+            <dd>Design + implementation</dd>
+          </div>
+          <div>
+            <dt>Surface</dt>
+            <dd>Production matching pipeline</dd>
+          </div>
+          <div>
+            <dt>Algorithms</dt>
+            <dd>Weighted Gale–Shapley · Edmonds' Blossom</dd>
+          </div>
+          <div>
+            <dt>Stack</dt>
+            <dd>Python · MongoDB</dd>
+          </div>
+        </dl>
+        <div class="chips">
+          <span class="chip chip--win">37% → 87% coverage</span>
+          <span class="chip">Graph matching</span>
+          <span class="chip">Constrained optimization</span>
+          <span class="chip">Production rollout</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="cs-body">
+<div class="wrap">
+
+<h2>The problem</h2>
+<p>
+  Ditto tells certain users they are guaranteed a match, and that promise is a big part of the product. The
+  matcher was delivering on it <b>37%</b> of the time.
+</p>
+<p>
+  Nothing was broken. The matcher is a weighted Gale&ndash;Shapley pass with Edmonds' Blossom handling the
+  general non-bipartite case, and it was doing what it was told: maximize total weight across the graph. A
+  guaranteed user with an awkward preference profile is an expensive edge. Dropping them frees up enough
+  weight elsewhere that the round scores better overall. The algorithm was optimizing a number nobody had
+  promised to anyone.
+</p>
+
+<div class="pull">
+  <div class="pull__label">Why this is not a ranking problem</div>
+  <p style="margin:0">
+    Matching is zero-sum in a way ranking is not. Every person you match is a person somebody else cannot
+    have. "Prioritize these users" always costs something, so the only real question is how much, and
+    whether that price is worth paying.
+  </p>
+</div>
+
+<h2>Why the obvious fix does not work</h2>
+<p>
+  The first thing anyone suggests is to sort guaranteed users to the front and match them greedily. That
+  fails right away. Greedy assignment on a matching problem causes exactly the failure mode matching
+  algorithms were invented to prevent: early picks take partners that later, better pairs needed, and
+  overall quality falls apart. You can get to 100% coverage that way and give everyone a bad match.
+</p>
+<p>
+  Blossom is also not a sort you can attach a rule to. It computes a maximum-weight matching over the entire
+  graph at once, augmenting along alternating paths and contracting odd cycles. There is no parameter for
+  "and definitely include this person." Any priority has to be expressed in the only thing the algorithm
+  reads, which is edge weights.
+</p>
+
+<h2>What I built</h2>
+<p>
+  Three priority tiers, applied as structured weight adjustments rather than hard constraints.
+</p>
+<p>
+  Tiers instead of a single guaranteed/not-guaranteed flag, because two states force you to treat very
+  different users identically and leave the optimizer no room to make sensible trades at the margin.
+</p>
+<p>
+  Weights instead of constraints, because a hard constraint can make a round infeasible or force a genuinely
+  bad pairing just to satisfy the rule. A weighted preference pushes the solver toward covering high-tier
+  users while still letting it decline when the alternative would be worse for everyone involved. The
+  matcher keeps all its original guarantees.
+</p>
+
+<div class="pull">
+  <div class="pull__label">The tradeoff, up front</div>
+  <p style="margin:0">
+    Any priority scheme spends match volume to buy coverage. I treated the exchange rate as the deliverable.
+    Not "did coverage go up," but how much volume each point of coverage cost. Coverage rose 50 points and
+    total matches fell 2.5. That ratio is what got it shipped.
+  </p>
+</div>
+
+<h2>Results</h2>
+<div class="result-grid">
+  <div class="result"><b>37&rarr;87%</b><span>Guaranteed-user coverage, in production</span></div>
+  <div class="result"><b>&minus;2.5%</b><span>Total matches, the entire cost</span></div>
+  <div class="result"><b>3</b><span>Tunable priority tiers</span></div>
+</div>
+<p>
+  A 50-point swing in whether the product keeps its main promise, for a 2.5% haircut on volume. Presenting
+  it as a trade rather than as a win is what turned it from a debate into a decision.
+</p>
+
+<h2>What I took from it</h2>
+<ul>
+  <li>
+    The bug was in the objective function, not the code. Nobody had written the guarantee into the thing
+    doing the optimizing, so there was no reason to expect it to be honored.
+  </li>
+  <li>
+    In matching problems, prefer soft weights to hard constraints. Constraints make rounds infeasible.
+    Weights let the solver tell you when your priority is a bad idea this time.
+  </li>
+  <li>
+    Lead with the exchange rate. "Coverage up 50 points" invites people to go looking for what it cost.
+    Saying it yourself is faster.
+  </li>
+</ul>
+
+</div>
+</main>
+
+    <section class="cs-next">
+      <div
+        class="wrap"
+        style="
+          display: flex;
+          justify-content: space-between;
+          gap: 16px;
+          flex-wrap: wrap;
+          align-items: center;
+        "
+      >
+        <a class="btn" href="pause-revamp.html">← The Pause Revamp</a>
+        <a class="btn btn--primary" href="sentiment-loop.html"
+          >Next: The Sentiment Loop →</a
+        >
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="wrap footer__in">
+        <span>© <span data-year>2026</span> Emma Di · Stanford, CA</span>
+        <span
+          ><a href="mailto:emmadi@stanford.edu">emmadi@stanford.edu</a></span
+        >
+      </div>
+    </footer>
+
+    <script src="../assets/site.js"></script>
+  </body>
+</html>

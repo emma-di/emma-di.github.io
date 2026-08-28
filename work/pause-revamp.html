@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Pause Revamp — Emma Di</title>
+    <meta
+      name="description"
+      content="Turning deactivation from a one-way door into a pause. Engineering DRI and acting PM at Ditto: −19% deactivations, ~18K users, one week."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 8' shape-rendering='crispEdges'%3E%3Cpath fill='%23E894BE' d='M1 1h2v1H1zM6 1h2v1H6zM1 2h7v2H1zM2 4h5v1H2zM3 5h3v1H3zM4 6h1v1H4z'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Silkscreen:wght@400;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/style.css" />
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="wrap nav__in">
+        <a class="nav__mark" href="../index.html">
+          <span data-sprite="heart" data-unit="3" data-accent="#E894BE"></span>
+          EMMA<span>DI</span>
+        </a>
+        <button
+          class="nav__toggle"
+          aria-expanded="false"
+          aria-controls="navlinks"
+        >
+          MENU
+        </button>
+        <div class="nav__links" id="navlinks">
+          <a href="../index.html#work">Work</a>
+          <a href="../index.html#experience">Experience</a>
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#contact">Contact</a>
+          <a href="../assets/EmmaDi-Resume.pdf">Résumé ↓</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="cs-hero">
+      <canvas
+        class="hero__bg px"
+        data-dither="band"
+        aria-hidden="true"
+      ></canvas>
+      <div class="wrap" style="position: relative; z-index: 1">
+        <a class="cs-back" href="../index.html#work">← All work</a>
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 14px;
+          "
+        >
+          <span
+            class="card__icon"
+            data-sprite="pause"
+            data-unit="6"
+            data-accent="#E894BE"
+            style="background: var(--blush)"
+          ></span>
+          <div class="card__kicker" style="margin: 0">
+            Ditto · Campus Matchmaker
+          </div>
+        </div>
+        <h1>The Pause Revamp</h1>
+        <p class="lede">Deactivating was the only way to step back from Ditto, so people used it for things that were not permanent. I built the in-between state. Deactivations dropped 19%.</p>
+        <dl class="cs-meta">
+          <div>
+            <dt>Role</dt>
+            <dd>Engineering DRI + acting PM</dd>
+          </div>
+          <div>
+            <dt>Timeline</dt>
+            <dd>One week, ship to ship</dd>
+          </div>
+          <div>
+            <dt>Reach</dt>
+            <dd>~18,000 users</dd>
+          </div>
+          <div>
+            <dt>Stack</dt>
+            <dd>React · TypeScript · MongoDB</dd>
+          </div>
+        </dl>
+        <div class="chips">
+          <span class="chip chip--win">−19% deactivations</span>
+          <span class="chip">Retention</span>
+          <span class="chip">Measurement plan</span>
+          <span class="chip">Survey design</span>
+          <span class="chip">Instrumentation</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="cs-body">
+<div class="wrap">
+
+<h2>The problem</h2>
+<p>
+  Ditto matches people on campus, which means it asks for a real commitment every week. A lot of users hit
+  a week where they cannot show up. Midterms, a trip home, a bad date, a breakup. The product gave them one
+  option for saying so, and it was to deactivate their account.
+</p>
+<p>
+  That made every temporary problem look like a permanent one. In the data, someone taking two weeks off
+  looked identical to someone who was finished, and getting back in took a deliberate decision they had to
+  remember to make. We were losing people who had not actually decided to leave.
+</p>
+
+<h2>Writing the measurement plan first</h2>
+<p>
+  I came in as engineering DRI and ended up acting as PM as well, so the first thing I wrote was not code.
+  It was the project's first measurement plan, because nobody had defined what a successful pause was
+  supposed to look like.
+</p>
+<p>
+  Two things came out of that. First, we agreed the goal was fewer permanent exits rather than fewer exit
+  attempts. Those sound like the same target, but the cheapest way to reduce deactivations is to bury the
+  button, and that wins the metric while making the product worse. Second, we fixed the comparison before
+  launch: matched 11-day periods, before and after. Deciding that up front meant the result could not get
+  quietly reframed later into something more flattering.
+</p>
+
+<div class="pull">
+  <div class="pull__label">The idea behind it</div>
+  <p style="margin:0">
+    Someone asking to leave is telling you something specific. The useful question is how many different
+    things "I want out" can mean, and whether the product can tell them apart.
+  </p>
+</div>
+
+<h2>What shipped</h2>
+
+<h3>A real paused state</h3>
+<p>
+  Paused is now its own state, separate from active and from deactivated. Your profile, history, and place
+  in the system all survive the break, so stepping away does not cost you anything.
+</p>
+
+<h3>Timed auto-resume</h3>
+<p>
+  This is the piece I like most. You set an end date when you pause, and the product brings you back on its
+  own. You do not have to remember. It turns a decision made on a bad night into something that expires by
+  itself. Timed pauses went from not existing to <b>18% of all pauses</b>.
+</p>
+
+<h3>An exit hub in account settings</h3>
+<p>
+  One place holding every way of stepping back: pause, adjust, leave. Scattering those across the app or
+  hiding the real exit is how you end up with users who feel trapped. Making leaving easy to find is what
+  lets you put the alternatives next to it honestly.
+</p>
+
+<h3>An exit survey that routes somewhere</h3>
+<p>
+  Most exit surveys just collect data on the way out. This one branches. What you pick determines which
+  alternative you see next, because "too many notifications" and "I met someone" are different problems and
+  should not get the same screen. About <b>22% of routed users abandoned deactivation</b>. Not because we
+  argued with them, but because the thing they wanted already existed and they had not found it.
+</p>
+
+<h2>Results</h2>
+<div class="result-grid">
+  <div class="result"><b>&minus;19%</b><span>Deactivations, across matched 11-day periods</span></div>
+  <div class="result"><b>0&rarr;18%</b><span>Share of all pauses that are timed</span></div>
+  <div class="result"><b>~22%</b><span>Of survey-routed users abandoned deactivation</span></div>
+</div>
+<p>
+  It ended up being the product's largest single system sweep and its biggest retention channel. The number
+  I actually care about is the 18%, though. That is users volunteering when they plan to come back, which
+  is a lot more useful than watching someone go quiet and guessing.
+</p>
+
+<h2>What I would do differently</h2>
+<ul>
+  <li>
+    I would have shipped the exit survey first and the pause flow second. The survey is what told us which
+    alternatives people wanted, and I built most of them before I had that data.
+  </li>
+  <li>
+    The 11-day comparison window was chosen for practical reasons and it is short. I would want a longer
+    read before claiming the effect holds.
+  </li>
+  <li>
+    Owning the metric changed how I built. Knowing I would be the one presenting the numbers made me
+    instrument things I would otherwise have deferred, and I should just do that by default.
+  </li>
+</ul>
+
+</div>
+</main>
+
+    <section class="cs-next">
+      <div
+        class="wrap"
+        style="
+          display: flex;
+          justify-content: space-between;
+          gap: 16px;
+          flex-wrap: wrap;
+          align-items: center;
+        "
+      >
+        <a class="btn" href="../index.html#work">← All work</a>
+        <a class="btn btn--primary" href="match-priority.html"
+          >Next: Three-Tier Match Priority →</a
+        >
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="wrap footer__in">
+        <span>© <span data-year>2026</span> Emma Di · Stanford, CA</span>
+        <span
+          ><a href="mailto:emmadi@stanford.edu">emmadi@stanford.edu</a></span
+        >
+      </div>
+    </footer>
+
+    <script src="../assets/site.js"></script>
+  </body>
+</html>

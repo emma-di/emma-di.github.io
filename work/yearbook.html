@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Yearbook — Emma Di</title>
+    <meta
+      name="description"
+      content="A friends-vote game that turns into an LLM-generated archetype, built end to end as a growth surface for Ditto. 844 launch visitors, 47% room completion."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 8' shape-rendering='crispEdges'%3E%3Cpath fill='%23E894BE' d='M1 1h2v1H1zM6 1h2v1H6zM1 2h7v2H1zM2 4h5v1H2zM3 5h3v1H3zM4 6h1v1H4z'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Silkscreen:wght@400;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/style.css" />
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="wrap nav__in">
+        <a class="nav__mark" href="../index.html">
+          <span data-sprite="heart" data-unit="3" data-accent="#E894BE"></span>
+          EMMA<span>DI</span>
+        </a>
+        <button
+          class="nav__toggle"
+          aria-expanded="false"
+          aria-controls="navlinks"
+        >
+          MENU
+        </button>
+        <div class="nav__links" id="navlinks">
+          <a href="../index.html#work">Work</a>
+          <a href="../index.html#experience">Experience</a>
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#contact">Contact</a>
+          <a href="../assets/EmmaDi-Resume.pdf">Résumé ↓</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="cs-hero">
+      <canvas
+        class="hero__bg px"
+        data-dither="band"
+        aria-hidden="true"
+      ></canvas>
+      <div class="wrap" style="position: relative; z-index: 1">
+        <a class="cs-back" href="../index.html#work">← All work</a>
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 14px;
+          "
+        >
+          <span
+            class="card__icon"
+            data-sprite="book"
+            data-unit="6"
+            data-accent="#FBE7B8"
+            style="background: var(--butter)"
+          ></span>
+          <div class="card__kicker" style="margin: 0">
+            Ditto · Growth surface
+          </div>
+        </div>
+        <h1>The Yearbook</h1>
+        <p class="lede">
+          Your friends vote on you across six dimensions, an LLM writes up who
+          that makes you, and the results page quietly hands you back to Ditto.
+        </p>
+        <dl class="cs-meta">
+          <div>
+            <dt>Role</dt>
+            <dd>Full-stack, owned end to end</dd>
+          </div>
+          <div>
+            <dt>Shipped</dt>
+            <dd>June 2026</dd>
+          </div>
+          <div>
+            <dt>Live at</dt>
+            <dd>
+              <a
+                href="https://ditto.ai/the-yearbook"
+                target="_blank"
+                rel="noopener"
+                >ditto.ai/the-yearbook</a
+              >
+            </dd>
+          </div>
+          <div>
+            <dt>Stack</dt>
+            <dd>React · TypeScript · MongoDB</dd>
+          </div>
+        </dl>
+        <div class="chips">
+          <span class="chip chip--win">844 launch visitors</span>
+          <span class="chip">Growth</span>
+          <span class="chip">LLM generation</span>
+          <span class="chip">Attribution</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="cs-body">
+      <div class="wrap">
+        <h2>What it is</h2>
+        <p>
+          You open a room, send it to your friends, and they answer questions
+          about you. Six scored dimensions come out the other end, and an LLM
+          turns that score profile into an archetype written up as a page you
+          can actually send to people.
+        </p>
+        <p>
+          It works because being described by your friends is more interesting
+          than describing yourself, and because the only way to see your own
+          results is to get other people to fill it out. The distribution is the
+          mechanic.
+        </p>
+
+        <h2>Why Ditto built it</h2>
+        <p>
+          Ditto has a lot of users who signed up, drifted, and never came back.
+          Reaching them with another notification does not work. They already
+          ignored the last four.
+        </p>
+        <p>
+          The Yearbook is a different pitch. It is fun on its own, it does not
+          require you to be dating anyone, and it lands through a friend rather
+          than through the app. Then the results page offers a reason to come
+          back to Ditto that connects to what you just read about yourself.
+        </p>
+
+        <div class="pull">
+          <div class="pull__label">The constraint I set</div>
+          <p style="margin: 0">
+            The game had to be worth playing even if you never clicked through
+            to Ditto. Anything less and it is an ad with extra steps, and people
+            can tell within about four seconds.
+          </p>
+        </div>
+
+        <h2>What I built</h2>
+
+        <h3>The scoring</h3>
+        <p>
+          Six dimensions, scored from friend votes rather than self-report.
+          Every question maps to dimensions with a weight, so a room with a
+          handful of responses still produces a usable profile instead of noise.
+          Those six scores are the entire input to the archetype step.
+        </p>
+
+        <h3>The archetype generation</h3>
+        <p>
+          An LLM takes the score profile and writes the result. The important
+          design choice was keeping the model downstream of the scoring rather
+          than letting it read raw answers. Scores first means the same profile
+          always produces a consistent archetype, and I can reason about what
+          the model is doing. Handing it the raw votes would have been easier to
+          build and much harder to trust.
+        </p>
+
+        <h3>The results page as a bridge</h3>
+        <p>
+          This is the part I spent the most time on. The results page has to
+          finish the experience properly, and only then offer the next thing. If
+          the call to action shows up before the payoff, the whole thing reads
+          as bait and the share rate dies with it.
+        </p>
+
+        <h3>Attribution end to end</h3>
+        <p>
+          I instrumented the full path from the results-page CTA through Ditto
+          onboarding. Without that, "did the Yearbook bring anyone back" is a
+          guess, and a growth surface you cannot measure is just a side project
+          the company paid for.
+        </p>
+
+        <h2>Results</h2>
+        <div class="result-grid">
+          <div class="result"><b>844</b><span>Visitors at launch</span></div>
+          <div class="result">
+            <b>84%</b><span>Of joiners finished all the questions</span>
+          </div>
+          <div class="result">
+            <b>47%</b><span>Of rooms completed fully</span>
+          </div>
+        </div>
+        <p>
+          84% completion among people who joined a room says the game itself
+          holds up. 47% of rooms finishing is the harder number, since it
+          depends on enough of someone's friends showing up, which I do not
+          control. Together they tell you the drop-off is in getting friends to
+          open the link, not in the experience once they do. That is a much
+          better problem to have and a much easier one to work on next.
+        </p>
+
+        <h2>What I would change</h2>
+        <ul>
+          <li>
+            The gap between 84% and 47% is entirely an invite problem. I would
+            put the next round of work into the share step rather than the game.
+          </li>
+          <li>
+            Six dimensions was a guess. With real response data I would check
+            whether any two of them are measuring the same thing.
+          </li>
+          <li>
+            I would set up the attribution before launch rather than alongside
+            it. It worked, but I was building the measurement and the thing
+            being measured at the same time, which is a bad way to find out your
+            events are wrong.
+          </li>
+        </ul>
+      </div>
+    </main>
+
+    <section class="cs-next">
+      <div
+        class="wrap"
+        style="
+          display: flex;
+          justify-content: space-between;
+          gap: 16px;
+          flex-wrap: wrap;
+          align-items: center;
+        "
+      >
+        <a class="btn" href="sentiment-loop.html">← The Sentiment Loop</a>
+        <a class="btn btn--primary" href="atria.html">Next: Atria →</a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="wrap footer__in">
+        <span>© <span data-year>2026</span> Emma Di · Stanford, CA</span>
+        <span
+          ><a href="mailto:emmadi@stanford.edu">emmadi@stanford.edu</a></span
+        >
+      </div>
+    </footer>
+
+    <script src="../assets/site.js"></script>
+  </body>
+</html>

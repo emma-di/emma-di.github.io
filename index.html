@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Emma Di — Product &amp; Full-Stack Engineer</title>
+    <meta
+      name="description"
+      content="Emma Di — product and full-stack engineer. CS (HCI) at Stanford, product engineer at Ditto. I ship the product and own the number it moves."
+    />
+    <meta
+      property="og:title"
+      content="Emma Di — Product &amp; Full-Stack Engineer"
+    />
+    <meta
+      property="og:description"
+      content="I ship the product and own the number it moves. CS (HCI) @ Stanford, product engineer @ Ditto."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://emma-di.github.io/" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 8' shape-rendering='crispEdges'%3E%3Cpath fill='%23E894BE' d='M1 1h2v1H1zM6 1h2v1H6zM1 2h7v2H1zM2 4h5v1H2zM3 5h3v1H3zM4 6h1v1H4z'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Silkscreen:wght@400;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="wrap nav__in">
+        <a class="nav__mark" href="/">
+          <span data-sprite="heart" data-unit="3" data-accent="#E894BE"></span>
+          EMMA<span>DI</span>
+        </a>
+        <button
+          class="nav__toggle"
+          aria-expanded="false"
+          aria-controls="navlinks"
+        >
+          MENU
+        </button>
+        <div class="nav__links" id="navlinks">
+          <a href="#about">About</a>
+          <a href="#work">Work</a>
+          <a href="#experience">Experience</a>
+          <a href="#life">Life</a>
+          <a href="#contact">Contact</a>
+          <a href="assets/EmmaDi-Resume.pdf">Résumé ↓</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ============ HERO ============ -->
+    <header class="hero">
+      <canvas
+        class="hero__bg px"
+        data-dither="hero"
+        aria-hidden="true"
+      ></canvas>
+      <div class="wrap hero__in">
+        <div>
+          <p class="hero__status">
+            <span class="blip"></span> Open to Summer 2027 · PM &amp; SWE
+          </p>
+          <h1>Emma Di</h1>
+          <p class="hero__tag">
+            I ship the product <b>and</b> own the number it moves.
+          </p>
+          <p class="hero__body">
+            CS at Stanford, on the HCI track, minoring in Management Science
+            &amp; Engineering. Right now I'm a product and full-stack engineer
+            at <b>Ditto</b>, a campus matchmaking app, where I've been the DRI
+            on retention, match prioritization, and the sentiment system.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#work"
+              >See the work <span data-sprite="star" data-unit="2"></span
+            ></a>
+            <a class="btn" href="assets/EmmaDi-Resume.pdf"
+              >Résumé
+              <span
+                data-sprite="disk"
+                data-unit="2"
+                data-accent="#B9A8DE"
+              ></span
+            ></a>
+          </div>
+        </div>
+
+        <div class="portrait">
+          <div class="portrait__frame">
+            <span class="sticker sticker--tl">
+              <span
+                data-sprite="note"
+                data-unit="2"
+                data-accent="#E894BE"
+              ></span>
+              music director
+            </span>
+            <img
+              class="px"
+              src="assets/img/emma.png"
+              alt="Emma Di"
+              width="260"
+              height="304"
+            />
+            <span class="sticker sticker--br">
+              <span data-sprite="pulse" data-unit="2"></span> stanford '28
+            </span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ STATS ============ -->
+    <section class="section" style="padding-top: 56px; padding-bottom: 56px">
+      <div class="wrap reveal">
+        <div class="stats">
+          <div class="stat">
+            <div class="stat__n">−19%</div>
+            <div class="stat__l">
+              User deactivations, after the Pause Revamp
+            </div>
+          </div>
+          <div class="stat">
+            <div class="stat__n">37→87%</div>
+            <div class="stat__l">
+              Guaranteed-user match coverage, for −2.5% total matches
+            </div>
+          </div>
+          <div class="stat">
+            <div class="stat__n">18K</div>
+            <div class="stat__l">Users reached by a one-week ship</div>
+          </div>
+          <div class="stat">
+            <div class="stat__n">ICRA '23</div>
+            <div class="stat__l">First-author robotics publication</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="section section--tint" id="about">
+      <div class="wrap">
+        <p class="eyebrow reveal">About</p>
+        <h2 class="section-title reveal">Hi, I'm Emma</h2>
+
+        <div class="about" style="margin-top: 32px">
+          <div class="reveal">
+            <p>
+              Most of what I do sits between product and engineering. At Ditto
+              that's literal. I write the PRD and the measurement plan, then I
+              write the code, then the number is mine. It's the fastest way I've
+              found to learn whether an idea was any good.
+            </p>
+            <p>
+              Before Stanford I spent two years on robotics research, training
+              perception models for an apple-picking arm. Good way to learn that
+              a model at 86% accuracy still has to physically grab fruit. Since
+              then: behavioral research on how people reason about causes, and
+              consulting work turning a hundred user interviews into something a
+              team can actually build.
+            </p>
+            <p>
+              The common thread is wanting to know whether it worked. I'd rather
+              instrument something small and watch it move than launch something
+              big and argue about it afterward.
+            </p>
+            <p>
+              Outside of that I'm the music director of an a cappella group, I
+              play in the Stanford Wind Symphony, and I spent a term at Oxford
+              writing about platform regulation and AI ethics. Happy to talk
+              about matching algorithms or four-part harmony, ideally both.
+            </p>
+            <p style="margin-top: 26px">
+              <a class="btn btn--blush" href="#work"
+                >See what I've built
+                <span data-sprite="star" data-unit="2"></span
+              ></a>
+            </p>
+          </div>
+
+          <div class="reveal">
+            <div class="panel" style="margin-bottom: 22px">
+              <div class="panel__title">Receipts</div>
+              <dl class="kv">
+                <dt>School</dt>
+                <dd>
+                  Stanford University, B.S. Computer Science (HCI), minor in
+                  Management Science &amp; Engineering — June 2028
+                </dd>
+                <dt>GPA</dt>
+                <dd>4.0 / 4.0</dd>
+                <dt>Courses</dt>
+                <dd>
+                  Data Structures &amp; Algorithms · Analysis of Algorithms ·
+                  Computer Systems · Large Language Models · Programming
+                  Abstractions · Convex Optimization · Probability Theory ·
+                  Linear Algebra
+                </dd>
+                <dt>Also</dt>
+                <dd>
+                  Counterpoint A Cappella (Music Director) · Stanford Wind
+                  Symphony · Women in CS · University of Oxford visiting student
+                </dd>
+              </dl>
+            </div>
+
+            <div class="panel">
+              <div class="panel__title">Toolkit</div>
+              <div class="skills">
+                <div>
+                  <h4>Product</h4>
+                  <div class="chips">
+                    <span class="chip">PRDs</span
+                    ><span class="chip">Instrumentation</span
+                    ><span class="chip">Funnel analysis</span>
+                    <span class="chip">Cohort analysis</span
+                    ><span class="chip">Survey design</span
+                    ><span class="chip">User research</span>
+                    <span class="chip">Linear</span
+                    ><span class="chip">Notion</span
+                    ><span class="chip">PostHog</span
+                    ><span class="chip">Figma</span>
+                  </div>
+                </div>
+                <div>
+                  <h4>Engineering</h4>
+                  <div class="chips">
+                    <span class="chip">Python</span
+                    ><span class="chip">TypeScript</span
+                    ><span class="chip">C++</span><span class="chip">C</span>
+                    <span class="chip">Java</span><span class="chip">R</span
+                    ><span class="chip">React</span
+                    ><span class="chip">Next.js</span>
+                    <span class="chip">Node</span><span class="chip">Flask</span
+                    ><span class="chip">MongoDB</span
+                    ><span class="chip">Docker</span
+                    ><span class="chip">CI/CD</span>
+                  </div>
+                </div>
+                <div>
+                  <h4>AI / ML</h4>
+                  <div class="chips">
+                    <span class="chip">LLM agents</span
+                    ><span class="chip">Chatbot skill design</span
+                    ><span class="chip">Evals</span>
+                    <span class="chip">Shadow testing</span
+                    ><span class="chip">Classifier design</span
+                    ><span class="chip">MCP servers</span>
+                    <span class="chip">PyTorch</span
+                    ><span class="chip">YOLOv8</span
+                    ><span class="chip">OpenCV</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ WORK ============ -->
+    <section class="section section--lilac" id="work">
+      <div class="wrap">
+        <p class="eyebrow reveal">Selected work</p>
+        <h2 class="section-title reveal">
+          Things I shipped, and what happened next
+        </h2>
+        <p class="section-lede reveal">
+          Four of these run in production at Ditto. Each write-up covers what
+          was broken, what I built, and what happened to the number.
+        </p>
+
+        <div class="work-grid">
+          <a class="card reveal" href="work/pause-revamp.html">
+            <span
+              class="card__icon"
+              data-sprite="pause"
+              data-unit="6"
+              data-accent="#E894BE"
+            ></span>
+            <div>
+              <div class="card__kicker">
+                Ditto · Engineering DRI + acting PM
+              </div>
+              <h3>The Pause Revamp</h3>
+              <p>
+                Deactivating was the only way to step back, so people used it
+                for things that weren't permanent. I built the in-between state:
+                a pause flow, timed auto-resume, and an exit hub, out to 18K
+                users in a week.
+              </p>
+              <div class="chips">
+                <span class="chip chip--win">−19% deactivations</span>
+                <span class="chip">Retention</span
+                ><span class="chip">React</span>
+                <span class="chip">TypeScript</span
+                ><span class="chip">Instrumentation</span>
+              </div>
+            </div>
+            <span class="card__go">Read →</span>
+          </a>
+
+          <a class="card reveal" href="work/match-priority.html">
+            <span
+              class="card__icon"
+              data-sprite="graph"
+              data-unit="6"
+              data-accent="#B9A8DE"
+            ></span>
+            <div>
+              <div class="card__kicker">Ditto · Matching algorithms</div>
+              <h3>Three-Tier Match Priority</h3>
+              <p>
+                Ditto guarantees some users a match, and the matcher was keeping
+                that promise 37% of the time. Adding priority tiers to a
+                weighted Gale–Shapley / Edmonds' Blossom matcher without gutting
+                overall volume.
+              </p>
+              <div class="chips">
+                <span class="chip chip--win">37% → 87% coverage</span>
+                <span class="chip">Graph matching</span
+                ><span class="chip">Python</span>
+                <span class="chip">MongoDB</span>
+              </div>
+            </div>
+            <span class="card__go">Read →</span>
+          </a>
+
+          <a class="card reveal" href="work/sentiment-loop.html">
+            <span
+              class="card__icon"
+              data-sprite="heart"
+              data-unit="6"
+              data-accent="#E894BE"
+            ></span>
+            <div>
+              <div class="card__kicker">Ditto · LLM systems</div>
+              <h3>The Sentiment Loop</h3>
+              <p>
+                A post-date feedback chatbot that learns what someone actually
+                wants, feeding a production sentiment system that now scores the
+                entire active user base. Two per-surface scores instead of one
+                blended average.
+              </p>
+              <div class="chips">
+                <span class="chip chip--win">Primary signal source</span>
+                <span class="chip">LLM agents</span
+                ><span class="chip">Safety escalation</span>
+                <span class="chip">Classifier design</span>
+              </div>
+            </div>
+            <span class="card__go">Read →</span>
+          </a>
+
+          <a class="card reveal" href="work/yearbook.html">
+            <span
+              class="card__icon"
+              data-sprite="book"
+              data-unit="6"
+              data-accent="#FBE7B8"
+            ></span>
+            <div>
+              <div class="card__kicker">
+                Ditto · Growth surface, owned end to end
+              </div>
+              <h3>The Yearbook</h3>
+              <p>
+                Your friends vote on you across six dimensions, an LLM writes up
+                who that makes you, and the results page hands you back to
+                Ditto. Instrumented from the CTA all the way through onboarding.
+              </p>
+              <div class="chips">
+                <span class="chip chip--win">844 launch visitors</span>
+                <span class="chip">React</span
+                ><span class="chip">TypeScript</span>
+                <span class="chip">MongoDB</span
+                ><span class="chip">Attribution</span>
+              </div>
+            </div>
+            <span class="card__go">Read →</span>
+          </a>
+
+          <a class="card reveal" href="work/atria.html">
+            <span
+              class="card__icon"
+              data-sprite="pulse"
+              data-unit="6"
+              data-accent="#7FC4B4"
+            ></span>
+            <div>
+              <div class="card__kicker">TreeHacks 2026 · Full-stack</div>
+              <h3>Atria — AI Hospital Bed Allocation</h3>
+              <p>
+                Hospitals decide who gets discharged and who gets a bed mostly
+                without forecasting. Two surfaces for two different jobs, over a
+                multi-agent backend that streams every decision before it
+                executes.
+              </p>
+              <div class="chips">
+                <span class="chip">Next.js</span
+                ><span class="chip">Three.js</span>
+                <span class="chip">WebSockets</span
+                ><span class="chip">Multi-agent</span>
+                <span class="chip">Human-in-the-loop</span>
+              </div>
+            </div>
+            <span class="card__go">Read →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MORE ============ -->
+    <section class="section">
+      <div class="wrap">
+        <p class="eyebrow reveal">Also built</p>
+        <h2 class="section-title reveal">Smaller things, still real</h2>
+        <p class="section-lede reveal">
+          Side projects and research that either shipped to actual users or got
+          published.
+        </p>
+
+        <div class="mini-grid">
+          <a
+            class="mini reveal"
+            href="https://github.com/emma-di"
+            target="_blank"
+            rel="noopener"
+          >
+            <span data-sprite="car" data-unit="4" data-accent="#B9A8DE"></span>
+            <h4 style="margin-top: 12px">dawaShare</h4>
+            <p>
+              Students had no way to share rides home over campus breaks. I
+              scoped and shipped the MVP solo. 400+ posted rides, now expanding
+              campus-wide with Students for a Sustainable Stanford.
+            </p>
+            <div class="chips">
+              <span class="chip">JavaScript</span
+              ><span class="chip">Apps Script</span
+              ><span class="chip">Solo</span>
+            </div>
+          </a>
+
+          <a
+            class="mini reveal"
+            href="https://github.com/emma-di"
+            target="_blank"
+            rel="noopener"
+          >
+            <span
+              data-sprite="apple"
+              data-unit="4"
+              data-accent="#E894BE"
+            ></span>
+            <h4 style="margin-top: 12px">Robotic Apple Harvesting</h4>
+            <p>
+              A YOLOv8 perception model locating apples for a real-time robotic
+              harvester. 100% accuracy unoccluded, 86% under occlusion in field
+              tests. First-author findings at ICRA '23.
+            </p>
+            <div class="chips">
+              <span class="chip">PyTorch</span><span class="chip">ROS</span
+              ><span class="chip">OpenCV</span>
+            </div>
+          </a>
+
+          <a
+            class="mini reveal"
+            href="https://github.com/emma-di"
+            target="_blank"
+            rel="noopener"
+          >
+            <span data-sprite="wave" data-unit="4" data-accent="#7FC4B4"></span>
+            <h4 style="margin-top: 12px">Avicii — AI DJ</h4>
+            <p>
+              Splits a track into stems and lets you remix it live. Librosa and
+              MSAF for BPM, key, and section detection, with chunked processing
+              so long sets don't blow up memory.
+            </p>
+            <div class="chips">
+              <span class="chip">Python</span><span class="chip">Librosa</span
+              ><span class="chip">Demucs</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EXPERIENCE ============ -->
+    <section class="section section--tint" id="experience">
+      <div class="wrap">
+        <p class="eyebrow reveal">Experience</p>
+        <h2 class="section-title reveal">Where I've been</h2>
+        <p class="section-lede reveal">
+          Product, engineering, research, and teaching. Mostly at the same time.
+        </p>
+
+        <ul class="tl">
+          <li class="reveal">
+            <div class="tl__role">
+              Product &amp; Full-Stack Software Engineer
+            </div>
+            <div class="tl__org">
+              Ditto — Campus Matchmaker · San Francisco, CA
+            </div>
+            <div class="tl__when">
+              May 2026 – Present · DRI: retention, match prioritization,
+              automated matching
+            </div>
+            <div class="tl__body">
+              <ul>
+                <li>
+                  Owned the Pause Revamp as engineering DRI and acting PM. Wrote
+                  the project's first measurement plan, then shipped the pause
+                  flow, timed auto-resume, and account-settings exit hub to ~18K
+                  users in one week.
+                </li>
+                <li>
+                  Cut deactivations 19% across matched 11-day periods and took
+                  timed pauses from 0% to 18% of all pauses. Became the
+                  product's largest single system sweep and retention channel.
+                </li>
+                <li>
+                  Built an exit-reason survey routing users to targeted
+                  alternatives. About 22% of routed users abandoned
+                  deactivation.
+                </li>
+                <li>
+                  Designed and shipped the production sentiment-flagging system
+                  now scoring the full active user base, using a per-surface
+                  architecture (chatbot vs. matching) rather than one blended
+                  score.
+                </li>
+                <li>
+                  Shipped a three-tier match-priority system for the weighted
+                  Gale–Shapley / Edmonds' Blossom matcher. Guaranteed-user
+                  coverage went 37% → 87% in production, total matches down
+                  2.5%.
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="reveal">
+            <div class="tl__role">VP of Account Management</div>
+            <div class="tl__org">Stanford Management Group · Stanford, CA</div>
+            <div class="tl__when">
+              Sep 2024 – Mar 2026 · Google, Palantir, Beli
+            </div>
+            <div class="tl__body">
+              <ul>
+                <li>
+                  <b>Google (Pixel Studio):</b> evaluated creative-tooling
+                  workflows and turned 20+ user interviews into 8 prioritized
+                  design recommendations with Figma prototypes.
+                </li>
+                <li>
+                  <b>Palantir:</b> revamped the global careers site and
+                  early-career candidate experience, synthesizing 100+ user and
+                  market interviews into design strategy.
+                </li>
+                <li>
+                  Led the 6 project managers running each term's engagements,
+                  owning client onboarding, scoping, and milestone tracking
+                  across engineering and design.
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="reveal">
+            <div class="tl__role">
+              Behavioral Data Analysis Research Assistant
+            </div>
+            <div class="tl__org">
+              Stanford Causality in Cognition Lab, Dept. of Psychology ·
+              Stanford, CA
+            </div>
+            <div class="tl__when">Jun 2025 – Sep 2025</div>
+            <div class="tl__body">
+              Built data pipelines and statistical models over trial-level
+              experiments on counterfactual reasoning and computational causal
+              judgment, including physics-simulation analysis and Python/R
+              visualizations.
+            </div>
+          </li>
+
+          <li class="reveal">
+            <div class="tl__role">Machine Learning Research Assistant</div>
+            <div class="tl__org">
+              Oregon State CoRIS Institute · Corvallis, OR
+            </div>
+            <div class="tl__when">Jun 2022 – Nov 2023</div>
+            <div class="tl__body">
+              Trained a YOLOv8 (PyTorch) perception model to localize apples for
+              real-time robotic harvesting. 100% accuracy unoccluded, 86% under
+              occlusion in field tests. Presented first-author findings at ICRA
+              '23.
+            </div>
+          </li>
+
+          <li class="reveal">
+            <div class="tl__role">CS106 Section Leader</div>
+            <div class="tl__org">
+              Stanford University · TA for Stanford's largest CS course
+            </div>
+            <div class="tl__when">Sep 2025 – Present</div>
+            <div class="tl__body">
+              Weekly sections of 12 students in Python and C++, plus 50+
+              debugged submissions across recursion, dynamic memory, and
+              pointers.
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ LIFE ============ -->
+    <section class="section section--lilac" id="life">
+      <div class="wrap">
+        <p class="eyebrow reveal">Off the clock</p>
+        <h2 class="section-title reveal">Not everything is a metric</h2>
+        <p class="section-lede reveal">
+          Dithered down to six colors, same as everything else on this page.
+        </p>
+
+        <div class="life">
+          <figure class="reveal">
+            <img
+              class="px"
+              src="assets/img/life-symphony.png"
+              alt="On tour in Italy with the Stanford Wind Symphony"
+              loading="lazy"
+            />
+            <figcaption>Wind Symphony tour, Italy</figcaption>
+          </figure>
+          <figure class="reveal">
+            <img
+              class="px"
+              src="assets/img/life-orchestra.png"
+              alt="Performing with an orchestra"
+              loading="lazy"
+            />
+            <figcaption>Still playing, still counting rests wrong</figcaption>
+          </figure>
+          <figure class="reveal">
+            <img
+              class="px"
+              src="assets/img/life-robotics.png"
+              alt="High school robotics team at competition"
+              loading="lazy"
+            />
+            <figcaption>
+              Robotics competition, where this all started
+            </figcaption>
+          </figure>
+          <figure class="reveal">
+            <img
+              class="px"
+              src="assets/img/life-hackathon.png"
+              alt="Photo booth at a Cal Hacks event"
+              loading="lazy"
+            />
+            <figcaption>Cal Hacks photo booth, 3am energy</figcaption>
+          </figure>
+          <figure class="reveal">
+            <img
+              class="px"
+              src="assets/img/life-hike.png"
+              alt="Sunrise hike with friends"
+              loading="lazy"
+            />
+            <figcaption>Sunrise hike, briefly a morning person</figcaption>
+          </figure>
+          <figure class="reveal">
+            <img
+              class="px"
+              src="assets/img/life-cookies.png"
+              alt="Baking cookies with friends"
+              loading="lazy"
+            />
+            <figcaption>
+              Cookies, iterated on more than most of my code
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section" id="contact">
+      <div class="wrap">
+        <p class="eyebrow reveal">Contact</p>
+        <div class="contact">
+          <div class="reveal">
+            <h2 class="section-title">Let's talk</h2>
+            <p style="color: var(--ink-2); max-width: 46ch">
+              I'm looking for Summer 2027 product management and software
+              engineering roles, ideally somewhere the same person gets to
+              define the thing and then build it.
+            </p>
+            <p style="color: var(--ink-2); max-width: 46ch">
+              Also always up for talking to students trying to get into product
+              engineering. Just email me.
+            </p>
+          </div>
+
+          <ul class="contact-list reveal">
+            <li>
+              <a href="mailto:emmadi@stanford.edu">
+                <span
+                  data-sprite="mail"
+                  data-unit="3"
+                  data-accent="#FBDCE9"
+                ></span>
+                <span><b>Email</b>emmadi@stanford.edu</span></a
+              >
+            </li>
+            <li>
+              <a
+                href="https://github.com/emma-di"
+                target="_blank"
+                rel="noopener"
+              >
+                <span data-sprite="star" data-unit="3"></span>
+                <span><b>GitHub</b>@emma-di</span></a
+              >
+            </li>
+            <li>
+              <a
+                href="https://linkedin.com/in/emma-di-0b9423253/"
+                target="_blank"
+                rel="noopener"
+              >
+                <span
+                  data-sprite="graph"
+                  data-unit="3"
+                  data-accent="#B9A8DE"
+                ></span>
+                <span><b>LinkedIn</b>Emma Di</span></a
+              >
+            </li>
+            <li>
+              <a href="assets/EmmaDi-Resume.pdf">
+                <span
+                  data-sprite="disk"
+                  data-unit="3"
+                  data-accent="#FBE7B8"
+                ></span>
+                <span><b>Résumé</b>PDF, one page</span></a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="wrap footer__in">
+        <span>© <span data-year>2026</span> Emma Di · Stanford, CA</span>
+        <span
+          >Hand-written HTML/CSS/JS, no framework · photos Bayer-dithered in
+          Python</span
+        >
+      </div>
+    </footer>
+
+    <script src="assets/site.js"></script>
+  </body>
+</html>

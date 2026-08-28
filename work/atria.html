@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Atria — Emma Di</title>
+    <meta
+      name="description"
+      content="An AI hospital bed allocation tool built at TreeHacks 2026: an operator command center and nurse shift handoffs over a multi-agent backend that streams every decision before it executes."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 8' shape-rendering='crispEdges'%3E%3Cpath fill='%23E894BE' d='M1 1h2v1H1zM6 1h2v1H6zM1 2h7v2H1zM2 4h5v1H2zM3 5h3v1H3zM4 6h1v1H4z'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Silkscreen:wght@400;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/style.css" />
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="wrap nav__in">
+        <a class="nav__mark" href="../index.html">
+          <span data-sprite="heart" data-unit="3" data-accent="#E894BE"></span>
+          EMMA<span>DI</span>
+        </a>
+        <button
+          class="nav__toggle"
+          aria-expanded="false"
+          aria-controls="navlinks"
+        >
+          MENU
+        </button>
+        <div class="nav__links" id="navlinks">
+          <a href="../index.html#work">Work</a>
+          <a href="../index.html#experience">Experience</a>
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#contact">Contact</a>
+          <a href="../assets/EmmaDi-Resume.pdf">Résumé ↓</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="cs-hero">
+      <canvas
+        class="hero__bg px"
+        data-dither="band"
+        aria-hidden="true"
+      ></canvas>
+      <div class="wrap" style="position: relative; z-index: 1">
+        <a class="cs-back" href="../index.html#work">← All work</a>
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 14px;
+          "
+        >
+          <span
+            class="card__icon"
+            data-sprite="pulse"
+            data-unit="6"
+            data-accent="#7FC4B4"
+            style="background: var(--mint)"
+          ></span>
+          <div class="card__kicker" style="margin: 0">
+            TreeHacks 2026 · Full-stack
+          </div>
+        </div>
+        <h1>Atria</h1>
+        <p class="lede">
+          Hospitals decide who gets discharged, who gets a bed, and who works
+          the next shift, mostly without forecasting. Atria puts a model in that
+          loop without taking the decision away from anyone.
+        </p>
+        <dl class="cs-meta">
+          <div>
+            <dt>Role</dt>
+            <dd>Full-stack developer</dd>
+          </div>
+          <div>
+            <dt>Built at</dt>
+            <dd>TreeHacks 2026</dd>
+          </div>
+          <div>
+            <dt>Devpost</dt>
+            <dd>
+              <a
+                href="https://devpost.com/software/atria-az68sw"
+                target="_blank"
+                rel="noopener"
+                >atria-az68sw</a
+              >
+            </dd>
+          </div>
+          <div>
+            <dt>Stack</dt>
+            <dd>Next.js · TypeScript · Three.js · WebSockets · Python</dd>
+          </div>
+        </dl>
+        <div class="chips">
+          <span class="chip">Multi-agent</span>
+          <span class="chip">Real-time streaming</span>
+          <span class="chip">Human-in-the-loop</span>
+          <span class="chip">3D digital twin</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="cs-body">
+      <div class="wrap">
+        <h2>Scoping it</h2>
+        <p>
+          Most hackathon healthcare projects are a diagnosis model. We went the
+          other way and looked at operations, because the calls hospitals make
+          constantly and under pressure are logistical ones: discharge this
+          patient or hold them, open this bed, staff this shift. Those decisions
+          get made with experience and a spreadsheet, not a risk forecast.
+        </p>
+        <p>
+          The thing I pushed for early was refusing to build one dashboard. A
+          charge nurse and a bed operator have different jobs, different time
+          horizons, and different tolerances for detail. One screen serving both
+          would have served neither, which is the usual reason hospital software
+          gets ignored.
+        </p>
+
+        <h2>Two surfaces</h2>
+
+        <h3>The operator command center</h3>
+        <p>
+          A live view of the whole floor for the person making allocation calls.
+          This is the surface I built. A multi-agent backend runs the
+          forecasting, and the interface streams each agent decision over
+          WebSockets as it happens.
+        </p>
+        <p>
+          The streaming is the point. Batch output gives you a recommendation
+          with no visible reasoning, and nobody responsible for patients is
+          going to act on that. Watching the decisions arrive one at a time
+          means an operator can see what the system is weighing and stop it
+          before anything executes.
+        </p>
+
+        <h3>Nurse-facing shift handoffs</h3>
+        <p>
+          Handoff is where operational context gets lost, and it happens several
+          times a day. The second surface is built for that moment specifically,
+          rather than being the operator view with fields removed.
+        </p>
+
+        <div class="pull">
+          <div class="pull__label">Human-in-the-loop, by design</div>
+          <p style="margin: 0">
+            Every agent decision is visible and reversible before execution. In
+            a hospital, a system that acts first and explains later is not a
+            faster system. It is one nobody turns on.
+          </p>
+        </div>
+
+        <h2>The 3D digital twin</h2>
+        <p>
+          Bed allocation is spatial, and reading it off a spreadsheet forces you
+          to reconstruct the floor in your head every time. I built a Three.js
+          model of the floor so capacity is something you look at instead of
+          something you parse.
+        </p>
+        <p>
+          It also does real work for the streaming interface. When an agent
+          proposes moving a patient, the proposal appears on the map, so you can
+          see whether it makes sense spatially before approving it.
+        </p>
+
+        <h2>What I got out of it</h2>
+        <ul>
+          <li>
+            Splitting one product into two user-specific surfaces was the best
+            call we made, and it came from scoping rather than building.
+          </li>
+          <li>
+            Streaming agent reasoning turned out to be a trust feature more than
+            a technical one. It changes whether a person is willing to use the
+            thing at all.
+          </li>
+          <li>
+            A 3D view is usually decoration. It earns its place when the
+            underlying problem is genuinely spatial, and bed allocation is.
+          </li>
+          <li>
+            Given more than a weekend, the next thing I would build is the audit
+            trail. Every approved and rejected proposal should be queryable
+            afterward, and right now it is not.
+          </li>
+        </ul>
+      </div>
+    </main>
+
+    <section class="cs-next">
+      <div
+        class="wrap"
+        style="
+          display: flex;
+          justify-content: space-between;
+          gap: 16px;
+          flex-wrap: wrap;
+          align-items: center;
+        "
+      >
+        <a class="btn" href="yearbook.html">← The Yearbook</a>
+        <a class="btn btn--primary" href="../index.html#work">All work →</a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="wrap footer__in">
+        <span>© <span data-year>2026</span> Emma Di · Stanford, CA</span>
+        <span
+          ><a href="mailto:emmadi@stanford.edu">emmadi@stanford.edu</a></span
+        >
+      </div>
+    </footer>
+
+    <script src="../assets/site.js"></script>
+  </body>
+</html>

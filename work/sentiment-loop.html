@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>The Sentiment Loop — Emma Di</title>
+    <meta
+      name="description"
+      content="A post-date feedback chatbot feeding a production sentiment-flagging system that scores Ditto's full active user base — per-surface, not one blended score."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 8' shape-rendering='crispEdges'%3E%3Cpath fill='%23E894BE' d='M1 1h2v1H1zM6 1h2v1H6zM1 2h7v2H1zM2 4h5v1H2zM3 5h3v1H3zM4 6h1v1H4z'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Silkscreen:wght@400;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/style.css" />
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="wrap nav__in">
+        <a class="nav__mark" href="../index.html">
+          <span data-sprite="heart" data-unit="3" data-accent="#E894BE"></span>
+          EMMA<span>DI</span>
+        </a>
+        <button
+          class="nav__toggle"
+          aria-expanded="false"
+          aria-controls="navlinks"
+        >
+          MENU
+        </button>
+        <div class="nav__links" id="navlinks">
+          <a href="../index.html#work">Work</a>
+          <a href="../index.html#experience">Experience</a>
+          <a href="../index.html#about">About</a>
+          <a href="../index.html#contact">Contact</a>
+          <a href="../assets/EmmaDi-Resume.pdf">Résumé ↓</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="cs-hero">
+      <canvas
+        class="hero__bg px"
+        data-dither="band"
+        aria-hidden="true"
+      ></canvas>
+      <div class="wrap" style="position: relative; z-index: 1">
+        <a class="cs-back" href="../index.html#work">← All work</a>
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 14px;
+          "
+        >
+          <span
+            class="card__icon"
+            data-sprite="heart"
+            data-unit="6"
+            data-accent="#E894BE"
+            style="background: var(--blush)"
+          ></span>
+          <div class="card__kicker" style="margin: 0">Ditto · LLM systems</div>
+        </div>
+        <h1>The Sentiment Loop</h1>
+        <p class="lede">Getting a dating product to learn what someone actually wants from a conversation after the date, instead of a form they filled in at signup.</p>
+        <dl class="cs-meta">
+          <div>
+            <dt>Role</dt>
+            <dd>Design + implementation</dd>
+          </div>
+          <div>
+            <dt>Scope</dt>
+            <dd>Full active user base</dd>
+          </div>
+          <div>
+            <dt>Surfaces</dt>
+            <dd>Chatbot · Matching</dd>
+          </div>
+          <div>
+            <dt>Stack</dt>
+            <dd>LLM agents · Classifier design · Evals</dd>
+          </div>
+        </dl>
+        <div class="chips">
+          <span class="chip chip--win">Primary signal source</span>
+          <span class="chip">Chatbot skill design</span>
+          <span class="chip">Safety escalation</span>
+          <span class="chip">Shadow testing</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="cs-body">
+<div class="wrap">
+
+<h2>The problem</h2>
+<p>
+  Dating products know what people say they want, because they asked at signup. They are much worse at
+  knowing what people actually respond to, because that evidence shows up after a date, in free text, at an
+  unpredictable hour, from someone with no reason to fill out a form.
+</p>
+<p>
+  Ditto had that gap. Stated preferences went stale almost immediately, and the strongest signal available,
+  which is how the date actually went, was not being collected at all.
+</p>
+
+<h2>Part one: a chatbot that asks well</h2>
+<p>
+  I designed and shipped the post-date feedback system as a chatbot skill. Conversation was the right
+  surface for a specific reason. A star rating gives you a number with nothing attached to it, but a short
+  exchange tells you which part of the date the number is about, and gives people room to bring up things
+  you did not know to ask.
+</p>
+
+<h3>A 24-hour response window</h3>
+<p>
+  Feedback goes stale fast. Ask too early and you get adrenaline, ask too late and you get a reconstruction.
+  Bounding it to 24 hours also made the data much easier to work with, because every response ties to one
+  specific date instead of to a vague stretch of time. That is what makes it usable downstream.
+</p>
+
+<h3>Safety escalation, built first</h3>
+<p>
+  If you invite people to describe how a date went, some of what you get back is not preference data. That
+  path cannot be a classification bucket that gets aggregated with everything else. It has to leave the
+  automated loop immediately and reach a person. I built the escalation route before the normal path, and I
+  would do it in that order again.
+</p>
+
+<div class="pull">
+  <div class="pull__label">Where it ended up</div>
+  <p style="margin:0">
+    The feedback loop is now the <b>primary signal source</b> for the sentiment system, rather than one
+    input among several.
+  </p>
+</div>
+
+<h2>Part two: the sentiment-flagging system</h2>
+<p>
+  That signal feeds a production sentiment-flagging system I designed and shipped, which now scores the
+  <b>full active user base</b>.
+</p>
+
+<h3>Per-surface scores, not one blended number</h3>
+<p>
+  The default design would have been a single sentiment score per user. I argued for separate scores per
+  surface instead, so how someone reads in the chatbot is tracked apart from how they read in matching.
+</p>
+<p>
+  One number would have been simpler and misleading. The two surfaces are watching different things.
+  Chatbot sentiment is what a user says directly, knowing they are being asked. Matching sentiment is
+  inferred from behavior, when they are not. Average those together and you get a number that does not
+  describe anything real. Someone can be enthusiastic in conversation and completely disengaged in the
+  product, and that mismatch is the most useful thing you could know about them. A blended score deletes it.
+</p>
+<p>
+  Splitting them also made the system debuggable. When a score looks wrong you can tell which surface
+  produced it, instead of starting every investigation by trying to un-mix an average.
+</p>
+
+<h2>Results</h2>
+<div class="result-grid">
+  <div class="result"><b>100%</b><span>Of the active user base scored in production</span></div>
+  <div class="result"><b>Primary</b><span>Signal source for the sentiment system</span></div>
+  <div class="result"><b>2</b><span>Independent per-surface scores</span></div>
+</div>
+
+<h2>What I took from it</h2>
+<ul>
+  <li>
+    How you collect the data is part of the model design. The 24-hour window is not a UX detail, it is what
+    makes each response attributable to one event.
+  </li>
+  <li>
+    Be suspicious of blended scores. Averaging signals from surfaces that observe different things throws
+    away the disagreements, which are usually the interesting part.
+  </li>
+  <li>
+    Build the escalation path before the feature. Any system that takes open-ended input from people will
+    eventually receive something urgent.
+  </li>
+  <li>
+    A rating tells you the score. A short conversation tells you what it is a score of.
+  </li>
+</ul>
+
+</div>
+</main>
+
+    <section class="cs-next">
+      <div
+        class="wrap"
+        style="
+          display: flex;
+          justify-content: space-between;
+          gap: 16px;
+          flex-wrap: wrap;
+          align-items: center;
+        "
+      >
+        <a class="btn" href="match-priority.html"
+          >← Three-Tier Match Priority</a
+        >
+        <a class="btn btn--primary" href="yearbook.html"
+          >Next: The Yearbook →</a
+        >
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="wrap footer__in">
+        <span>© <span data-year>2026</span> Emma Di · Stanford, CA</span>
+        <span
+          ><a href="mailto:emmadi@stanford.edu">emmadi@stanford.edu</a></span
+        >
+      </div>
+    </footer>
+
+    <script src="../assets/site.js"></script>
+  </body>
+</html>
