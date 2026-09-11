@@ -77,6 +77,7 @@ function initGuestbook() {
   // Nothing to show and nowhere to post: hide it rather than ship a dead form.
   if (!configured() && !isLocal()) {
     section.remove();
+    document.querySelector('.nav__links a[href="#notes"]')?.remove();
     return;
   }
 
