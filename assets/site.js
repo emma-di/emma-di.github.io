@@ -120,6 +120,15 @@ const SPRITES = {
     "X.XXXXX.X",
     "XXXXXXXXX",
   ],
+  pin: [
+    "..XXX..",
+    ".XcccX.",
+    ".XcccX.",
+    "..XXX..",
+    "...X...",
+    "...X...",
+    "...X...",
+  ],
   star: [
     "...X...",
     "...X...",

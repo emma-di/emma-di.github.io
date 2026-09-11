@@ -49,6 +49,7 @@
           <a href="#work">Work</a>
           <a href="#experience">Experience</a>
           <a href="#life">Life</a>
+          <a href="#notes">Notes</a>
           <a href="#contact">Contact</a>
           <a href="assets/EmmaDi-Resume.pdf">Résumé ↓</a>
         </div>
@@ -648,6 +649,41 @@
       </div>
     </section>
 
+    <!-- ============ BULLETIN BOARD ============ -->
+    <section class="section" id="notes">
+      <div class="wrap">
+        <p class="eyebrow reveal">Bulletin board</p>
+        <h2 class="section-title reveal">Leave me a note</h2>
+        <p class="section-lede reveal">
+          If you made it this far, say hi. Notes go up right away.
+        </p>
+
+        <div class="board reveal">
+          <div class="board__wall">
+            <div class="board__list"></div>
+          </div>
+
+          <form class="board__form" autocomplete="off">
+            <label for="gb-name">Your name</label>
+            <input id="gb-name" name="name" type="text" maxlength="32" required />
+
+            <label for="gb-message">Note <span class="board__count">0/280</span></label>
+            <textarea id="gb-message" name="message" maxlength="280" required></textarea>
+
+            <div class="board__trap" aria-hidden="true">
+              <label for="gb-website">Leave this empty</label>
+              <input id="gb-website" name="website" type="text" tabindex="-1" />
+            </div>
+
+            <button class="btn btn--primary" type="submit">
+              Pin it up <span data-sprite="pin" data-unit="2" data-accent="#FFFBF5"></span>
+            </button>
+            <p class="board__status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ CONTACT ============ -->
     <section class="section" id="contact">
       <div class="wrap">
@@ -719,5 +755,6 @@
     </footer>
 
     <script src="assets/site.js"></script>
+    <script src="assets/guestbook.js"></script>
   </body>
 </html>

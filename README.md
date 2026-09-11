@@ -70,6 +70,82 @@ python3 -m http.server 4321
 Click through every work card and every footer link. The only things that break
 quietly are a renamed PDF and a mistyped `work/` path.
 
+## Turning on the bulletin board
+
+The board is live-but-hidden until it has somewhere to store notes. With no keys
+set it renders demo notes on `localhost` only and removes itself everywhere else,
+so it is safe to push before it is wired up.
+
+### 1. Make a Supabase project
+
+Sign up at supabase.com, create a project, then open the SQL editor and run this:
+
+```sql
+create table public.notes (
+  id         uuid primary key default gen_random_uuid(),
+  name       text not null,
+  message    text not null,
+  created_at timestamptz not null default now(),
+  constraint name_len    check (char_length(name) between 1 and 32),
+  constraint message_len check (char_length(message) between 1 and 280),
+  constraint no_links    check (message !~* '(https?://|www\.)'
+                            and name    !~* '(https?://|www\.)')
+);
+
+alter table public.notes enable row level security;
+
+-- anyone may read and add. Nobody may edit or delete: you do that from the
+-- Supabase table editor, and no policy means no permission.
+create policy "read notes"    on public.notes for select to anon using (true);
+create policy "add a note"    on public.notes for insert to anon with check (true);
+
+-- backstop against a flood: at most 10 new notes a minute, site-wide
+create or replace function public.notes_rate_limit()
+returns trigger language plpgsql as $$
+begin
+  if (select count(*) from public.notes
+      where created_at > now() - interval '1 minute') >= 10 then
+    raise exception 'too many notes right now';
+  end if;
+  return new;
+end $$;
+
+create trigger notes_throttle before insert on public.notes
+  for each row execute function public.notes_rate_limit();
+```
+
+### 2. Paste the keys in
+
+Project Settings → API gives you the project URL and the `anon` public key. Put
+both at the top of `assets/guestbook.js`:
+
+```js
+const GUESTBOOK = {
+  url: 'https://<project>.supabase.co',
+  anonKey: '<anon public key>',
+};
+```
+
+The anon key is meant to be public and is safe to commit. Row-level security is
+what protects the data, which is why the policies above matter more than the key
+does. Never put the `service_role` key in this repo.
+
+### 3. Deleting a note
+
+Supabase dashboard → Table editor → `notes` → delete the row. Anonymous visitors
+have no delete policy, so nobody else can.
+
+### What stops spam
+
+- A hidden honeypot field. Bots fill it, people never see it.
+- 30 seconds between posts from one browser.
+- Length caps in the form and again as database constraints.
+- Links rejected in the browser and again by a database constraint.
+- 10 notes per minute site-wide, enforced by a trigger.
+
+The browser checks are convenience. The database constraints are the real ones,
+since anyone can call the API directly.
+
 ## Adding or changing a photo
 
 Photos are Bayer-dithered down to a fixed six-colour pastel palette so
