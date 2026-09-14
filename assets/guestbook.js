@@ -19,7 +19,7 @@ const DEMO_NOTES = [
 ];
 
 // Kill switch. Flip to true to show the board again.
-const ENABLED = false;
+const ENABLED = true;
 
 const configured = () =>
   ENABLED && Boolean(GUESTBOOK.url && GUESTBOOK.anonKey);
