@@ -2,8 +2,10 @@
    Fill both values in to go live. Until then the board only renders locally. */
 
 const GUESTBOOK = {
-  url: '', // https://<project>.supabase.co
-  anonKey: '', // the public anon key (safe to commit; row-level security does the work)
+  url: 'https://kvnacdxnxpggisplbqif.supabase.co',
+  // Publishable key: client-safe by design, protected by row-level security.
+  // Never put an sb_secret_ key in this repo.
+  anonKey: 'sb_publishable_lH0sZpq6_tzh-tbNlXt2qQ_jYVjVm-9',
 };
 
 const NOTE_MAX = 280;
