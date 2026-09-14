@@ -18,7 +18,11 @@ const DEMO_NOTES = [
   { id: 'd2', name: 'also demo', message: 'not live until the Supabase keys are in', created_at: new Date().toISOString() },
 ];
 
-const configured = () => Boolean(GUESTBOOK.url && GUESTBOOK.anonKey);
+// Kill switch. Flip to true to show the board again.
+const ENABLED = false;
+
+const configured = () =>
+  ENABLED && Boolean(GUESTBOOK.url && GUESTBOOK.anonKey);
 const isLocal = () => ['localhost', '127.0.0.1'].includes(location.hostname);
 
 function headers() {
