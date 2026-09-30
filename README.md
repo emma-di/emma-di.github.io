@@ -3,6 +3,8 @@
 My portfolio! HTML, CSS, and JS.
 Deployed with GitHub Pages straight from `main`.
 
+View at (https://emma-di.github.io)
+
 ## Layout
 
 ```
@@ -22,11 +24,6 @@ python3 -m http.server 4321
 ```
 
 Then open <http://localhost:4321>. There is nothing to compile.
-
-## Updating your resume
-
-Nothing on this site is generated from the PDF. The PDF is a copy, and the page
-content is hand-written HTML. Updating one does not update the other.
 
 ### The download button
 
