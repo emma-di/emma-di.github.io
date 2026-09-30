@@ -1,6 +1,6 @@
 # emma-di.github.io
 
-My portfolio. Hand-written HTML, CSS, and JS — no framework, no build step.
+My portfolio! HTML, CSS, and JS.
 Deployed with GitHub Pages straight from `main`.
 
 ## Layout
