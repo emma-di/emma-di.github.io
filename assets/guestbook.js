@@ -1,37 +1,22 @@
-/* Bulletin board — visitor notes, stored in Supabase.
-   Fill both values in to go live. Until then the board only renders locally. */
+/* Bulletin board — visitor notes, stored by a Cloudflare Worker (worker/guestbook-worker.js).
+   Set API to the deployed Worker URL to go live. Until then the board renders
+   demo notes on localhost and removes itself everywhere else.
 
-const GUESTBOOK = {
-  url: 'https://kvnacdxnxpggisplbqif.supabase.co',
-  // Publishable key: client-safe by design, protected by row-level security.
-  // Never put an sb_secret_ key in this repo.
-  anonKey: 'sb_publishable_lH0sZpq6_tzh-tbNlXt2qQ_jYVjVm-9',
-};
+   If the backend ever stops responding the section deletes itself rather than
+   showing an error. A dead board should be invisible, not broken. */
+
+const API = ''; // https://<worker-name>.<subdomain>.workers.dev
 
 const NOTE_MAX = 280;
 const NAME_MAX = 32;
-const POST_COOLDOWN_MS = 30_000;
 const URL_RE = /(https?:\/\/|www\.|\b[a-z0-9-]+\.(com|net|org|io|ru|xyz|shop|link)\b)/i;
 
 const DEMO_NOTES = [
-  { id: 'd1', name: 'demo', message: 'this is what a note looks like', created_at: new Date().toISOString() },
-  { id: 'd2', name: 'also demo', message: 'not live until the Supabase keys are in', created_at: new Date().toISOString() },
+  { id: 'd1', name: 'demo', message: 'this is what a note looks like' },
+  { id: 'd2', name: 'also demo', message: 'not live until the Worker URL is set' },
 ];
 
-// Kill switch. Flip to true to show the board again.
-const ENABLED = false;
-
-const configured = () =>
-  ENABLED && Boolean(GUESTBOOK.url && GUESTBOOK.anonKey);
 const isLocal = () => ['localhost', '127.0.0.1'].includes(location.hostname);
-
-function headers() {
-  return {
-    apikey: GUESTBOOK.anonKey,
-    Authorization: `Bearer ${GUESTBOOK.anonKey}`,
-    'Content-Type': 'application/json',
-  };
-}
 
 /* Deterministic per-note tilt and colour, so nothing jumps between renders. */
 function hash(str) {
@@ -80,12 +65,12 @@ function initGuestbook() {
   const section = document.querySelector('#notes');
   if (!section) return;
 
-  // Nothing to show and nowhere to post: hide it rather than ship a dead form.
-  if (!configured() && !isLocal()) {
+  const remove = () => {
     section.remove();
     document.querySelector('.nav__links a[href="#notes"]')?.remove();
-    return;
-  }
+  };
+
+  if (!API && !isLocal()) return remove();
 
   const list = section.querySelector('.board__list');
   const form = section.querySelector('.board__form');
@@ -105,23 +90,21 @@ function initGuestbook() {
     count.textContent = `${message.value.length}/${NOTE_MAX}`;
   });
 
-  if (!configured()) {
+  if (!API) {
     renderNotes(list, DEMO_NOTES);
     button.disabled = true;
-    say('Demo only. Add the Supabase keys to go live.');
+    say('Demo only. Set API to the Worker URL to go live.');
     return;
   }
 
   async function load() {
     try {
-      const r = await fetch(
-        `${GUESTBOOK.url}/rest/v1/notes?select=id,name,message,created_at&order=created_at.desc&limit=60`,
-        { headers: headers() },
-      );
+      const r = await fetch(`${API}/notes`);
       if (!r.ok) throw new Error(r.status);
       renderNotes(list, await r.json());
     } catch {
-      say("Couldn't load the notes right now.", true);
+      // backend is gone: take the section down instead of showing a broken one
+      remove();
     }
   }
 
@@ -135,20 +118,18 @@ function initGuestbook() {
     if (who.length > NAME_MAX || what.length > NOTE_MAX) return say('A bit too long.', true);
     if (URL_RE.test(what) || URL_RE.test(who)) return say('Links aren’t allowed, sorry.', true);
 
-    let last = 0;
-    try { last = Number(localStorage.getItem('gb:last') || 0); } catch {}
-    if (Date.now() - last < POST_COOLDOWN_MS) return say('Give it a few seconds.', true);
-
     button.disabled = true;
     say('Pinning it up...');
     try {
-      const r = await fetch(`${GUESTBOOK.url}/rest/v1/notes`, {
+      const r = await fetch(`${API}/notes`, {
         method: 'POST',
-        headers: { ...headers(), Prefer: 'return=minimal' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: who, message: what }),
       });
-      if (!r.ok) throw new Error(r.status);
-      try { localStorage.setItem('gb:last', String(Date.now())); } catch {}
+      if (!r.ok) {
+        const { error } = await r.json().catch(() => ({}));
+        return say(error || "That didn't go through.", true);
+      }
       form.reset();
       count.textContent = `0/${NOTE_MAX}`;
       say('Thanks! It’s up there now.');

@@ -72,79 +72,65 @@ quietly are a renamed PDF and a mistyped `work/` path.
 
 ## Turning on the bulletin board
 
-The board is live-but-hidden until it has somewhere to store notes. With no keys
-set it renders demo notes on `localhost` only and removes itself everywhere else,
-so it is safe to push before it is wired up.
+The board stores notes in a Cloudflare Worker with a KV namespace. Cloudflare's
+free tier has no idle pause, so nothing has to keep it alive. (It used to run on
+Supabase, whose free tier pauses after about a week of inactivity and then gets
+deleted — which is exactly what a low-traffic guestbook does.)
 
-### 1. Make a Supabase project
+Until `API` is set in `assets/guestbook.js`, the board shows demo notes on
+`localhost` and removes itself everywhere else, so it is safe to push unconfigured.
 
-Sign up at supabase.com, create a project, then open the SQL editor and run this:
+### 1. Create the Worker
 
-```sql
-create table public.notes (
-  id         uuid primary key default gen_random_uuid(),
-  name       text not null,
-  message    text not null,
-  created_at timestamptz not null default now(),
-  constraint name_len    check (char_length(name) between 1 and 32),
-  constraint message_len check (char_length(message) between 1 and 280),
-  constraint no_links    check (message !~* '(https?://|www\.)'
-                            and name    !~* '(https?://|www\.)')
-);
+Cloudflare dashboard → **Workers & Pages** → **Create** → **Create Worker**.
+Name it something like `emma-guestbook`, deploy the placeholder, then **Edit code**,
+paste everything from `worker/guestbook-worker.js`, and deploy again.
 
-alter table public.notes enable row level security;
+### 2. Create the KV namespace and bind it
 
--- anyone may read and add. Nobody may edit or delete: you do that from the
--- Supabase table editor, and no policy means no permission.
-create policy "read notes"    on public.notes for select to anon using (true);
-create policy "add a note"    on public.notes for insert to anon with check (true);
+**Storage & Databases** → **KV** → **Create**, name it `guestbook`.
 
--- backstop against a flood: at most 10 new notes a minute, site-wide
-create or replace function public.notes_rate_limit()
-returns trigger language plpgsql as $$
-begin
-  if (select count(*) from public.notes
-      where created_at > now() - interval '1 minute') >= 10 then
-    raise exception 'too many notes right now';
-  end if;
-  return new;
-end $$;
+Then back in the Worker: **Settings** → **Bindings** → **Add** → **KV namespace**.
 
-create trigger notes_throttle before insert on public.notes
-  for each row execute function public.notes_rate_limit();
-```
+- Variable name: `NOTES` (exactly — the code looks for `env.NOTES`)
+- KV namespace: `guestbook`
 
-### 2. Paste the keys in
+Deploy once more so the binding takes effect.
 
-Project Settings → API gives you the project URL and the `anon` public key. Put
-both at the top of `assets/guestbook.js`:
+### 3. Point the site at it
+
+The Worker's URL is on its overview page, like
+`https://emma-guestbook.<your-subdomain>.workers.dev`. Put it in
+`assets/guestbook.js`:
 
 ```js
-const GUESTBOOK = {
-  url: 'https://<project>.supabase.co',
-  anonKey: '<anon public key>',
-};
+const API = 'https://emma-guestbook.<your-subdomain>.workers.dev';
 ```
 
-The anon key is meant to be public and is safe to commit. Row-level security is
-what protects the data, which is why the policies above matter more than the key
-does. Never put the `service_role` key in this repo.
+Commit and push. Nothing here is secret — the Worker enforces every rule itself,
+and its CORS list only accepts requests from this site.
 
-### 3. Deleting a note
+### Deleting a note
 
-Supabase dashboard → Table editor → `notes` → delete the row. Anonymous visitors
-have no delete policy, so nobody else can.
+Cloudflare dashboard → **KV** → `guestbook` → find the `note:` key → delete.
 
 ### What stops spam
 
-- A hidden honeypot field. Bots fill it, people never see it.
-- 30 seconds between posts from one browser.
-- Length caps in the form and again as database constraints.
-- Links rejected in the browser and again by a database constraint.
-- 10 notes per minute site-wide, enforced by a trigger.
+- A hidden honeypot field in the form. Bots fill it, people never see it.
+- One note per IP per 30 seconds, enforced in the Worker.
+- Ten notes per minute site-wide, so nobody can flood the board.
+- Length caps and link rejection, checked in the browser and again in the Worker.
 
-The browser checks are convenience. The database constraints are the real ones,
-since anyone can call the API directly.
+The browser checks are convenience. The Worker checks are the real ones, since
+anyone can call the endpoint directly.
+
+### If it breaks
+
+`assets/guestbook.js` removes the whole section if the backend stops responding,
+so visitors see nothing rather than an error. There is also a daily
+`board-check` workflow that opens an issue when the Worker is down — treat that
+as best-effort, since GitHub disables scheduled workflows in repos that sit
+untouched for 60 days.
 
 ## Adding or changing a photo
 
