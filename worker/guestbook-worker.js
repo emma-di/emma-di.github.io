@@ -11,7 +11,7 @@
 const NOTE_MAX = 280;
 const NAME_MAX = 32;
 const LIST_LIMIT = 60;
-const COOLDOWN_S = 30; // per IP
+const COOLDOWN_S = 60; // per IP. KV rejects any expirationTtl below 60.
 const BURST_MAX = 10; // site-wide, per minute
 
 const URL_RE =
@@ -89,10 +89,16 @@ async function addNote(request, env, origin) {
   const note = { id, name, message, created_at: new Date(now).toISOString() };
 
   await env.NOTES.put(`note:${id}`, JSON.stringify(note));
-  await env.NOTES.put(`rate:${ip}`, "1", { expirationTtl: COOLDOWN_S });
-  await env.NOTES.put(burstKey, String(burst + 1), { expirationTtl: 120 });
 
-  return json({ ok: true }, 201, origin);
+  // The note is stored. Rate bookkeeping must not turn a saved note into a 500.
+  try {
+    await env.NOTES.put(`rate:${ip}`, "1", { expirationTtl: COOLDOWN_S });
+    await env.NOTES.put(burstKey, String(burst + 1), { expirationTtl: 120 });
+  } catch {
+    /* ignore */
+  }
+
+  return json({ ok: true, note }, 201, origin);
 }
 
 export default {

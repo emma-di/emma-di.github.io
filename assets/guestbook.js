@@ -5,7 +5,7 @@
    If the backend ever stops responding the section deletes itself rather than
    showing an error. A dead board should be invisible, not broken. */
 
-const API = ''; // https://<worker-name>.<subdomain>.workers.dev
+const API = 'https://emma-guestbook.emma-tingyu.workers.dev';
 
 const NOTE_MAX = 280;
 const NAME_MAX = 32;
@@ -97,11 +97,14 @@ function initGuestbook() {
     return;
   }
 
+  let shown = [];
+
   async function load() {
     try {
       const r = await fetch(`${API}/notes`);
       if (!r.ok) throw new Error(r.status);
-      renderNotes(list, await r.json());
+      shown = await r.json();
+      renderNotes(list, shown);
     } catch {
       // backend is gone: take the section down instead of showing a broken one
       remove();
@@ -130,10 +133,14 @@ function initGuestbook() {
         const { error } = await r.json().catch(() => ({}));
         return say(error || "That didn't go through.", true);
       }
+      // KV is eventually consistent, so re-fetching here often misses the note
+      // that was just written. Show it straight away instead.
+      const { note } = await r.json().catch(() => ({}));
+      if (note) shown.unshift(note);
+      renderNotes(list, shown);
       form.reset();
       count.textContent = `0/${NOTE_MAX}`;
       say('Thanks! It’s up there now.');
-      load();
     } catch {
       say("That didn't go through. Try again in a minute.", true);
     } finally {
